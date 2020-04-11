@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TreeSimulation.Core.Orders;
 
 namespace TreeSimulation.Core
 {
@@ -12,6 +11,7 @@ namespace TreeSimulation.Core
         public World(int seed, int width, int height, int startPopulation, WorldSettings settings)
         {
             Settings = settings;
+            GenerationSeed = seed;
             Random = new Random(seed);
             _lightField = new int[width, height];
             Cells = new CellCollection(width, height);
@@ -31,6 +31,10 @@ namespace TreeSimulation.Core
         }
 
         public CellCollection Cells
+        {
+            get;
+        }
+        public int GenerationSeed
         {
             get;
         }
@@ -71,6 +75,7 @@ namespace TreeSimulation.Core
             Order order = new Order();
             foreach (var item in Cells.Objects)
                 item.GenerationStage(order);
+            order.Execute(this);
 
             Seeds = Seeds.Where(c => Cells.IsFreeAt(c.Position)).ToList();
 

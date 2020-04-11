@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using TreeSimulation.Core;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,6 +35,7 @@ namespace TreeSimulation
         {
             base.OnNavigatedTo(e);
             _world = e.Parameter as World;
+            _seedLabel.Content = _world.GenerationSeed.ToString();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -82,6 +84,13 @@ namespace TreeSimulation
         {
             _world.MakeStep();
             _dayNumber.Text = _world.Day.ToString();
+        }
+
+        private void CopySeed(object sender, RoutedEventArgs e)
+        {
+            var data = new DataPackage();
+            data.SetText(_seedLabel.Content.ToString());
+            Clipboard.SetContent(data);
         }
     }
 }

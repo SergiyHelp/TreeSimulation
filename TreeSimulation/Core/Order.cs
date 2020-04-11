@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TreeSimulation.Core.Orders
+namespace TreeSimulation.Core
 {
     public class Order
     {

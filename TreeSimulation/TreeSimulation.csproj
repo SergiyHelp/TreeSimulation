@@ -124,7 +124,7 @@
     <Compile Include="Core\CellCollection.cs" />
     <Compile Include="Core\IVisible.cs" />
     <Compile Include="Core\View.cs" />
-    <Compile Include="Core\Orders\Order.cs" />
+    <Compile Include="Core\Order.cs" />
     <Compile Include="Core\Cells\Fruit.cs" />
     <Compile Include="Core\Gene.cs" />
     <Compile Include="Core\Genome.cs" />

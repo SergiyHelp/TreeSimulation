@@ -1,5 +1,4 @@
-﻿using TreeSimulation.Core.Orders;
-using Windows.UI;
+﻿using Windows.UI;
 
 namespace TreeSimulation.Core.Cells
 {

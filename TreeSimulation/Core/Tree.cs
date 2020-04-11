@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI;
+﻿using Windows.UI;
 
 namespace TreeSimulation.Core
 {
     public class Tree
-    {       
+    {
         public Tree(World environment)
         {
             var rand = environment.Random;
@@ -17,8 +12,8 @@ namespace TreeSimulation.Core
             WoodColor = Color.FromArgb(255, (byte)rand.Next(100), (byte)rand.Next(120, 255), (byte)rand.Next(100));
             DeathDay = Environment.Day + rand.Next(80, 120);
             Energy = Environment.Settings.InitialEnergy;
-            
         }
+
         public Tree(Tree parent) : this(parent.Environment)
         {
             Energy = parent.Energy / parent.SporesProduced;

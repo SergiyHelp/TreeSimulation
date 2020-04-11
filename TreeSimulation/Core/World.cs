@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TreeSimulation.Core.Cells;
 using TreeSimulation.Core.Orders;
 
 namespace TreeSimulation.Core
@@ -9,7 +8,7 @@ namespace TreeSimulation.Core
     public class World
     {
         private int[,] _lightField;
-    
+
         public World(int seed, int width, int height, int startPopulation, WorldSettings settings)
         {
             Settings = settings;
@@ -25,37 +24,43 @@ namespace TreeSimulation.Core
             get;
             private set;
         }
+
         public WorldSettings Settings
         {
             get;
         }
+
         public CellCollection Cells
         {
             get;
         }
+
         public List<Seed> Seeds
         {
             get;
             set;
         }
+
         public Random Random
         {
             get;
         }
+
         public int Height
         {
             get => Cells.Height;
         }
+
         public int Width
         {
             get => Cells.Width;
         }
+
         public int Day
         {
             get;
             private set;
         }
-
 
         public void MakeStep()
         {
@@ -65,7 +70,7 @@ namespace TreeSimulation.Core
 
             Order order = new Order();
             foreach (var item in Cells.Objects)
-                item.GenerationStage(order);            
+                item.GenerationStage(order);
 
             Seeds = Seeds.Where(c => Cells.IsFreeAt(c.Position)).ToList();
 
@@ -76,7 +81,6 @@ namespace TreeSimulation.Core
 
             Seeds = Seeds.Where(c => Cells.IsFreeAt(c.Position)).ToList();
 
-            
             UpdateView();
             Day++;
         }
@@ -89,6 +93,7 @@ namespace TreeSimulation.Core
 
             return res;
         }
+
         public double GetEnergy(Position pos)
         {
             double relativeHeight = pos.Y / (double)Height;
@@ -98,10 +103,12 @@ namespace TreeSimulation.Core
 
             return energy;
         }
+
         private bool IsOnGround(Seed seed)
         {
             return seed.Position.Y == 0;
         }
+
         private void UpdateLightField()
         {
             _lightField = new int[Width, Height];
@@ -117,10 +124,10 @@ namespace TreeSimulation.Core
                 }
             }
         }
+
         private void UpdateView()
         {
             View = Cells.Objects.Cast<IVisible>().Concat(Seeds.Cast<IVisible>()).Select(x => x.GetView()).ToList();
         }
-      
     }
 }

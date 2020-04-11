@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TreeSimulation.Core
+﻿namespace TreeSimulation.Core
 {
     public readonly struct Position
     {
@@ -31,6 +25,7 @@ namespace TreeSimulation.Core
             hashCode = hashCode * -1521134295 + Y.GetHashCode();
             return hashCode;
         }
+
         public override string ToString()
         {
             return $"{X}, {Y}";

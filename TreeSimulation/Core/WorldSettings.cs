@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TreeSimulation.Core
+﻿namespace TreeSimulation.Core
 {
     public class WorldSettings
     {
@@ -32,6 +26,5 @@ namespace TreeSimulation.Core
         public double FruitMass { get; }
         public int MinLife { get; }
         public int MaxLife { get; }
-        
     }
 }

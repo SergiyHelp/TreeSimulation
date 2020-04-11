@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TreeSimulation.Core.Cells;
 
 namespace TreeSimulation.Core
 {
     public class Gene
     {
-        private readonly int[] _values; 
+        private readonly int[] _values;
 
         public Gene(params int[] vals)
         {
@@ -27,14 +23,18 @@ namespace TreeSimulation.Core
             {
                 case 0:
                     return typeof(Bud);
+
                 case 1:
                     return typeof(Fruit);
+
                 case 2:
                     return typeof(Leaf);
+
                 default:
                     throw new Exception("Using of invalid gene!");
             }
         }
+
         public static Gene CreateRandom(Random random)
         {
             return new Gene(random.Next(Genome.CommonSize * 5),

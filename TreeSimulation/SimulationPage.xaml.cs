@@ -14,7 +14,7 @@ namespace TreeSimulation
         private World _world;
         private bool _active;
         private int _period;
-   
+
         public SimulationPage()
         {
             this.InitializeComponent();
@@ -29,16 +29,19 @@ namespace TreeSimulation
                 System.Threading.Thread.Sleep(_period);
             }
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             _world = e.Parameter as World;
         }
+
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             _active = false;
             base.OnNavigatedFrom(e);
         }
+
         private void ChangePlayMode(object sender, RoutedEventArgs e)
         {
             if (_play.IsOn)
@@ -54,10 +57,12 @@ namespace TreeSimulation
                 _active = false;
             }
         }
+
         private void CreateNewWorld(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));
         }
+
         private void DrawCanvas(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
             float cellSize = (float)Math.Min(sender.Size.Width / _world.Width, sender.Size.Height / _world.Height);
@@ -72,6 +77,7 @@ namespace TreeSimulation
             }
             args.DrawingSession.FillRectangle(0, rectangleHeight - cellSize, (float)sender.Size.Width, cellSize, Colors.Gray);
         }
+
         private void MakeStep(object sender, RoutedEventArgs e)
         {
             _world.MakeStep();

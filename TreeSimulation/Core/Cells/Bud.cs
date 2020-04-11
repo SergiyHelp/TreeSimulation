@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TreeSimulation.Core.Orders;
 using Windows.UI;
-using TreeSimulation.Core.Orders;
 
 namespace TreeSimulation.Core.Cells
 {
@@ -14,12 +9,12 @@ namespace TreeSimulation.Core.Cells
         {
         }
 
-        public double Energy 
-        { 
-            get; 
-            private set; 
+        public double Energy
+        {
+            get;
+            private set;
         }
-       
+
         public override void EnergyStage()
         {
             base.EnergyStage();
@@ -34,7 +29,7 @@ namespace TreeSimulation.Core.Cells
         }
 
         protected override void NormalLife(Order order)
-        {            
+        {
             if (Energy > Settings.BudMass)
             {
                 int x = Position.X;
@@ -46,7 +41,6 @@ namespace TreeSimulation.Core.Cells
                 order.AddCreating(new Position(x, y - 1), Owner, ActiveGene[1]);
                 order.AddCreating(new Position(x + 1, y), Owner, ActiveGene[2]);
                 order.AddCreating(new Position(x - 1, y), Owner, ActiveGene[3]);
-
             }
         }
     }

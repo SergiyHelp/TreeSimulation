@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TreeSimulation.Core.Cells;
 using Windows.UI;
-using TreeSimulation.Core.Cells;
 
 namespace TreeSimulation.Core
 {
@@ -20,7 +15,7 @@ namespace TreeSimulation.Core
         }
 
         public Position Position { get; set; }
-      
+
         public void Fall()
         {
             Position = new Position(Position.X, Position.Y - 1);
@@ -35,6 +30,6 @@ namespace TreeSimulation.Core
         {
             var tree = new Tree(_parent);
             return new Bud(tree, tree.Genome[0]);
-        }       
+        }
     }
 }

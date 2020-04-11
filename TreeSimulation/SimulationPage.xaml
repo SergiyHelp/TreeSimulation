@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="TreeSimulation.SimulationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TreeSimulation"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <Grid>
+        <canvas:CanvasAnimatedControl x:Name="_canvas"  
+                                      Draw="DrawCanvas"
+                                      ClearColor="Transparent"/>
+
+        <Canvas x:Name="_container">
+            <controls:DropShadowPanel Canvas.Left="40" Canvas.Top="40" Canvas.ZIndex="2">
+                <Grid  Background="{ThemeResource SystemColorWindowBrush}" Width="250" Height="160">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Content="New World" Click="CreateNewWorld"/>
+                    <TextBlock Grid.Row="1" x:Name="_dayNumber" Height="30" Text="0" Margin="10"/>
+                    <Button Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Content="Step" Click="MakeStep"/>
+                    <ToggleSwitch Grid.Row="3" x:Name="_play" IsOn="False" Margin="5" Toggled="ChangePlayMode"/>
+                    <Slider x:Name="_speedSlider" Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" Margin="5" Minimum="1" Maximum="30" Value="25"/>
+                </Grid>
+            </controls:DropShadowPanel>
+        </Canvas>
+    </Grid>
+</Page>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Diagnostics;
 using TreeSimulation.Core.Cells;
 using TreeSimulation.Core.Orders;
 
@@ -10,11 +9,9 @@ namespace TreeSimulation.Core
     public class World
     {
         private int[,] _lightField;
-        private readonly Stopwatch _watch;
-
+    
         public World(int seed, int width, int height, int startPopulation, WorldSettings settings)
         {
-            _watch = new Stopwatch();
             Settings = settings;
             Random = new Random(seed);
             _lightField = new int[width, height];
@@ -62,42 +59,13 @@ namespace TreeSimulation.Core
 
         public void MakeStep()
         {
-
-            Cell.BudTicks = 0L;
-            Cell.FruitTicks = 0L;
-            Cell.WoodTicks = 0L;
-            Cell.LeafTicks = 0L;
-
-            _watch.Reset();
-            Debug.WriteLine("Day {0}", Day);
-
-            _watch.Start();
             UpdateLightField();
-            GetTime("Field");
-
             foreach (var item in Cells.Objects)
                 item.EnergyStage();
-            
-            GetTime("Energy");
 
             Order order = new Order();
             foreach (var item in Cells.Objects)
                 item.GenerationStage(order);            
-
-            Debug.WriteLine("{0, 10} {1}", "Bud", Cell.BudTicks);
-            Debug.WriteLine("{0, 10} {1}", "Leaf", Cell.LeafTicks);
-            Debug.WriteLine("{0, 10} {1}", "Wood", Cell.WoodTicks);
-            Debug.WriteLine("{0, 10} {1}", "Fruit", Cell.FruitTicks);
-
-
-            GetTime("Orders");
-
-            order.ReplaceAll(this);
-            order.CreateAll(this);
-            order.RemoveAll(this);
-            order.SeedAll(this);
-
-            GetTime("Execute");
 
             Seeds = Seeds.Where(c => Cells.IsFreeAt(c.Position)).ToList();
 
@@ -108,10 +76,6 @@ namespace TreeSimulation.Core
 
             Seeds = Seeds.Where(c => Cells.IsFreeAt(c.Position)).ToList();
 
-            GetTime("Seeds");
-            
-            _watch.Stop();
-            Debug.WriteLine("__________________________________________________________");
             
             UpdateView();
             Day++;
@@ -157,13 +121,6 @@ namespace TreeSimulation.Core
         {
             View = Cells.Objects.Cast<IVisible>().Concat(Seeds.Cast<IVisible>()).Select(x => x.GetView()).ToList();
         }
-
-        private void GetTime(string label)
-        {
-            _watch.Stop();
-            Debug.WriteLine("{0, 12} {1}", label, _watch.Elapsed);
-            _watch.Reset();
-            _watch.Start();
-        }
+      
     }
 }

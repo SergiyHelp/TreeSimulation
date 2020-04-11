@@ -9,16 +9,16 @@ namespace TreeSimulation.Core.Orders
 {
     public class Order
     {
-        event Action<World> Create;
-        event Action<World> Replace;
-        event Action<World> Remove;
-        event Action<World> Seed;
+        private event Action<World> OnCreate;
+        private event Action<World> OnReplace;
+        private event Action<World> OnRemove;
+        private event Action<World> OnSeed;
 
 
 
         public void AddCreating(Position position, Tree owner, int dna)
         {
-            Create += (w) =>
+            OnCreate += (w) =>
             {
                 if (Genome.IsValidGene(dna) && w.Cells.IsFreeAt(position))
                     w.Cells.Add(Cells.Cell.Create(Gene.GetCellType(dna), owner, owner.Genome.UseActivator(dna)), position);
@@ -26,33 +26,23 @@ namespace TreeSimulation.Core.Orders
         }
         public void AddReplacing(Cells.Cell old, Type type, Tree owner, Gene active )
         {
-            Replace += (w) => w.Cells.Replace(old, Cells.Cell.Create(type, owner, active));
+            OnReplace += (w) => w.Cells.Replace(old, Cells.Cell.Create(type, owner, active));
         }
         public void AddRemoving(Cells.Cell cell)
         {
-            Replace += (w) => w.Cells.Remove(cell);
+            OnReplace += (w) => w.Cells.Remove(cell);
         }
         public void AddSeeding(Position position, Tree parent)
         {
-            Create += (w) => w.Seeds.Add(new Seed(position, parent));
+            OnCreate += (w) => w.Seeds.Add(new Seed(position, parent));
         }
 
-        public void CreateAll(World world)
+        public void Execute(World world)
         {
-            Create(world);
+            OnReplace?.Invoke(world);
+            OnRemove?.Invoke(world);
+            OnCreate?.Invoke(world);
+            OnSeed?.Invoke(world);
         }
-        public void ReplaceAll(World world)
-        {
-            Replace(world);
-        }
-        public void RemoveAll(World world)
-        {
-            Remove(world);
-        }
-        public void SeedAll(World world)
-        {
-            Seed(world);
-        }
-
     }
 }

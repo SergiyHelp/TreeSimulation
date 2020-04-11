@@ -10,12 +10,7 @@ using TreeSimulation.Core.Orders;
 namespace TreeSimulation.Core.Cells
 {
     public abstract class Cell : IVisible
-    {
-        public static long BudTicks;
-        public static long LeafTicks;
-        public static long FruitTicks;
-        public static long WoodTicks;
-
+    {        
         public Cell(Tree owner, Gene active)
         {
             Owner = owner;
@@ -59,28 +54,10 @@ namespace TreeSimulation.Core.Cells
         }
         public void GenerationStage(Order order)
         {
-            var watch = Stopwatch.StartNew();
-
-            try
-            {
-                if (CommonEnergy <= 0 || Owner.DeathDay <= Owner.Environment.Day)
-                    Death(order);
-                else
-                    NormalLife(order);
-            }
-            finally
-            {
-                watch.Stop();
-                if (this is Bud)
-                    BudTicks += watch.ElapsedTicks;
-                else if (this is Leaf)
-                    LeafTicks += watch.ElapsedTicks;
-                else if (this is Fruit)
-                    FruitTicks += watch.ElapsedTicks;
-                else if (this is Wood)
-                    WoodTicks += watch.ElapsedTicks;
-            }
-
+            if (CommonEnergy <= 0 || Owner.DeathDay <= Owner.Environment.Day)
+                Death(order);
+            else
+                NormalLife(order);
         }
         protected virtual void NormalLife(Order order)
         {            

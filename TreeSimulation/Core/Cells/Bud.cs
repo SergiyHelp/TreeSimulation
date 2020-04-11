@@ -33,26 +33,21 @@ namespace TreeSimulation.Core.Cells
             return new View(Position, Colors.Blue);
         }
 
-        protected override void NormalLife(ICollection<Order> orders)
+        protected override void NormalLife(Order order)
         {            
             if (Energy > Settings.BudMass)
             {
                 int x = Position.X;
                 int y = Position.Y;
 
-                orders.Add(new Replacer(this, new Wood(Owner, ActiveGene)));
+                order.AddReplacing(this, typeof(Wood), Owner, ActiveGene);
 
-                TryCreate(orders, ActiveGene[0], new Position(x, y + 1));
-                TryCreate(orders, ActiveGene[1], new Position(x, y - 1));
-                TryCreate(orders, ActiveGene[2], new Position(x + 1, y));
-                TryCreate(orders, ActiveGene[3], new Position(x - 1, y));
+                order.AddCreating(new Position(x, y + 1), Owner, ActiveGene[0]);
+                order.AddCreating(new Position(x, y - 1), Owner, ActiveGene[1]);
+                order.AddCreating(new Position(x + 1, y), Owner, ActiveGene[2]);
+                order.AddCreating(new Position(x - 1, y), Owner, ActiveGene[3]);
+
             }
-        }
-
-        private void TryCreate(ICollection<Order> orders, int genePart, Position position)
-        {
-            if (Genome.IsValidGene(genePart) && Owner.Environment.Cells.IsFreeAt(position))
-                orders.Add( new Creator(position, Create(Gene.GetCellType(genePart), Owner, Owner.Genome[genePart % Genome.CommonSize])));
         }
     }
 }

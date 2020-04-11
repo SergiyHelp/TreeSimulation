@@ -10,7 +10,7 @@ namespace TreeSimulation.Core
     public class World
     {
         private int[,] _lightField;
-        private Stopwatch _watch;
+        private readonly Stopwatch _watch;
 
         public World(int seed, int width, int height, int startPopulation, WorldSettings settings)
         {
@@ -80,12 +80,9 @@ namespace TreeSimulation.Core
             
             GetTime("Energy");
 
-            List<Order> orders = new List<Order>();
+            Order order = new Order();
             foreach (var item in Cells.Objects)
-                item.GenerationStage(orders);
-
-            orders = orders.OrderBy(x => x.Priority).ToList();
-
+                item.GenerationStage(order);            
 
             Debug.WriteLine("{0, 10} {1}", "Bud", Cell.BudTicks);
             Debug.WriteLine("{0, 10} {1}", "Leaf", Cell.LeafTicks);
@@ -94,9 +91,12 @@ namespace TreeSimulation.Core
 
 
             GetTime("Orders");
-            
-            foreach (var item in orders)
-                item.Execute(this);
+
+            order.ReplaceAll(this);
+            order.CreateAll(this);
+            order.RemoveAll(this);
+            order.SeedAll(this);
+
             GetTime("Execute");
 
             Seeds = Seeds.Where(c => Cells.IsFreeAt(c.Position)).ToList();

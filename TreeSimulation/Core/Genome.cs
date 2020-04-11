@@ -39,6 +39,10 @@ namespace TreeSimulation.Core
         }
         
 
+        public Gene UseActivator(int dna)
+        {
+            return _genes[dna % CommonSize];
+        }
         public static bool IsValidGene(int v)
         {
             return v < CommonSize * 3;

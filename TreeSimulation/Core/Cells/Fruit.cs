@@ -19,11 +19,11 @@ namespace TreeSimulation.Core.Cells
             return new View(Position, Colors.Violet);
         }
 
-        protected override void Death(ICollection<Order> orders)
+        protected override void Death(Order order)
         {
-            base.Death(orders);
+            base.Death(order);
             if (CommonEnergy > 0)
-                orders.Add(new Seeder(new Seed(Position, Owner)));
+                order.AddSeeding(Position, Owner);
         }
     }
 }

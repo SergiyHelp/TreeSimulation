@@ -57,16 +57,16 @@ namespace TreeSimulation.Core.Cells
         {
             CommonEnergy -= Settings.EnergyCosts;
         }
-        public void GenerationStage(ICollection<Order> orders)
+        public void GenerationStage(Order order)
         {
             var watch = Stopwatch.StartNew();
 
             try
             {
                 if (CommonEnergy <= 0 || Owner.DeathDay <= Owner.Environment.Day)
-                    Death(orders);
+                    Death(order);
                 else
-                    NormalLife(orders);
+                    NormalLife(order);
             }
             finally
             {
@@ -82,12 +82,12 @@ namespace TreeSimulation.Core.Cells
             }
 
         }
-        protected virtual void NormalLife(ICollection<Order> orders)
+        protected virtual void NormalLife(Order order)
         {            
         }
-        protected virtual void Death(ICollection<Order> orders)
+        protected virtual void Death(Order order)
         {
-            orders.Add( new Remover(this));
+            order.AddRemoving(this);
         }
 
         public abstract View GetView();

@@ -5,8 +5,12 @@ namespace TreeSimulation.Core.Cells
 {
     public class Bud : Cell
     {
+        private int _term;
+        private bool _ripe;
+
         public Bud(Tree owner, Gene active) : base(owner, active)
         {
+            _term = ActiveGene[4] % Genome.CommonSize;
         }
 
         public double Energy
@@ -20,16 +24,24 @@ namespace TreeSimulation.Core.Cells
             base.EnergyStage();
             var light = LightEnergy * Settings.BudProfit;
             Energy += light;
-            if (Energy >= Settings.BudMass)
+            if(_term == 0)
             {
-                CommonEnergy += Energy - Settings.BudMass;
+                _term = ActiveGene[4] % Genome.CommonSize;
+                if(Energy < Settings.BudMass)
+                {
+                    CommonEnergy += Energy;
+                    Energy = 0;
+                }
+                else
+                {
+                    _ripe = true;
+                }
             }
             else
             {
-                var delta = Math.Min(Settings.MaxEnergyPass, Settings.BudMass - Energy);
-                CommonEnergy -= delta;
-                Energy += delta;
+                _term--;
             }
+
 
 
 
@@ -42,7 +54,7 @@ namespace TreeSimulation.Core.Cells
 
         protected override void NormalLife(Order order)
         {
-            if (Energy > Settings.BudMass)
+            if (_ripe)
             {
                 int x = Position.X;
                 int y = Position.Y;

@@ -130,6 +130,7 @@
     <Compile Include="Core\Gene.cs" />
     <Compile Include="Core\Genome.cs" />
     <Compile Include="Core\Cells\Leaf.cs" />
+    <Compile Include="Core\WorldSettings\SettingsModel.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -142,7 +143,7 @@
     <Compile Include="Core\Tree.cs" />
     <Compile Include="Core\Cells\Wood.cs" />
     <Compile Include="Core\World.cs" />
-    <Compile Include="Core\WorldSettings.cs" />
+    <Compile Include="Core\WorldSettings\WorldSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -182,6 +183,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.3.200213001</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Win2D.uwp">
       <Version>1.25.0</Version>

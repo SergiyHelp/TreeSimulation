@@ -40,6 +40,7 @@ namespace TreeSimulation.Core
             return new Gene(random.Next(Genome.CommonSize * 5),
                             random.Next(Genome.CommonSize * 5),
                             random.Next(Genome.CommonSize * 5),
+                            random.Next(Genome.CommonSize * 5),
                             random.Next(Genome.CommonSize * 5));
         }
     }

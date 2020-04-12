@@ -18,9 +18,7 @@ namespace TreeSimulation.Core
             Random rn = new Random(seed);
 
 
-            var points = new List<double>();
-            points.Add(0);
-            points.Add(0);
+            var points = new List<double> { 0, 0 };
 
             for (double factor = width; points.Count < width; factor *= 0.5)
                 for (int i = points.Count - 1; i > 0; i--)

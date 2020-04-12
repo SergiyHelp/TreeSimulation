@@ -1,4 +1,5 @@
 ﻿using System;
+using TreeSimulation.Core.Settings;
 
 namespace TreeSimulation.Core.Cells
 {

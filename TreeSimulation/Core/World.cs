@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TreeSimulation.Core.Settings;
 
 namespace TreeSimulation.Core
 {
@@ -114,7 +115,7 @@ namespace TreeSimulation.Core
             double relativeHeight = pos.Y / (double)Height;
             double energy = relativeHeight * (Settings.MaxEnergy - Settings.MinEnergy) + Settings.MinEnergy;
 
-            energy *= Math.Pow(Settings.CellsTransparentsy, _lightField[pos.X, pos.Y]);
+            energy *= Math.Pow(Settings.CellsTransparency, _lightField[pos.X, pos.Y]);
 
             return energy;
         }

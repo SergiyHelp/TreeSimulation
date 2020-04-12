@@ -8,9 +8,12 @@
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings ="using:TreeSimulation.Core.Settings"
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-
+    <Page.DataContext>
+        <settings:SettingsModel x:Name="_settings"/>
+    </Page.DataContext>
     <controls:DropShadowPanel Name="_shadow" HorizontalAlignment="Center" VerticalAlignment="Center">
         <ScrollViewer Width="360" Height="540" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
             <Grid Background="{ThemeResource SystemColorWindowBrush}">
@@ -85,6 +88,8 @@
                         <TextBlock Grid.Row="9" Text="Fruit Mass" TextAlignment="Center" VerticalAlignment="Center" />
                         <c:NumberBox Grid.Row="9" Grid.Column="1" Name="_fruitMassField" Minimum="1" Maximum="300" Value="10" SpinButtonPlacementMode="Compact" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10 0" />
                     </Grid>
+                    
+                    
                 </controls:Expander>
                 <Button x:Name="_confirmButton" Grid.Row="2" Margin="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Create World" Click="CreateWorld" />
             </Grid>

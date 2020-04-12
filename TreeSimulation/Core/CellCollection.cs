@@ -7,13 +7,14 @@ namespace TreeSimulation.Core
     public class CellCollection
     {
         private readonly Dictionary<Cell, Position> _cells;
-        private readonly bool[,] _map;
+        private readonly Landscape _landscape;
 
-        public CellCollection(int width, int height) : base()
+        public CellCollection(int width, int height, Landscape landscape) : base()
         {
             Width = width;
             Height = height;
-            _map = new bool[width, height];
+            _landscape = landscape;
+            Map = new bool[width, height];
             _cells = new Dictionary<Cell, Position>();
         }
 
@@ -21,28 +22,19 @@ namespace TreeSimulation.Core
         {
             get;
         }
-
         public int Height
         {
             get;
         }
-
+        public bool[,] Map 
+        { 
+            get;
+        }
         public List<Cell> Objects
         {
             get => _cells.Keys.ToList();
         }
 
-        public bool[,] Map
-        {
-            get => _map;
-        }
-
-        public void Add(Cell cell, Position position)
-        {
-            position = Normalize(position);
-            _cells.Add(cell, position);
-            _map[position.X, position.Y] = true;
-        }
 
         public bool Remove(Cell cell)
         {
@@ -50,12 +42,27 @@ namespace TreeSimulation.Core
             {
                 var pos = _cells[cell];
                 _cells.Remove(cell);
-                _map[pos.X, pos.Y] = false;
+                Map[pos.X, pos.Y] = false;
                 return true;
             }
             return false;
         }
-
+        public bool IsInside(Position pos)
+        {
+            pos = Normalize(pos);
+            return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
+        }
+        public Position GetPosition(Cell cell)
+        {
+            if (_cells.ContainsKey(cell))
+                return _cells[cell];
+            else
+                return new Position(0, 0);
+        }
+        public Position Normalize(Position pos)
+        {
+            return new Position(pos.X < 0 ? pos.X + Width : pos.X % Width, pos.Y);
+        }
         public bool Replace(Cell from, Cell to)
         {
             if (_cells.ContainsKey(from))
@@ -67,30 +74,16 @@ namespace TreeSimulation.Core
             }
             return false;
         }
-
         public bool IsFreeAt(Position position)
         {
             position = Normalize(position);
-            return IsInside(position) && !_map[position.X, position.Y];
+            return IsInside(position) && !Map[position.X, position.Y] && _landscape.IsFreeAt(position);
         }
-
-        public bool IsInside(Position pos)
+        public void Add(Cell cell, Position position)
         {
-            pos = Normalize(pos);
-            return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
-        }
-
-        public Position GetPosition(Cell cell)
-        {
-            if (_cells.ContainsKey(cell))
-                return _cells[cell];
-            else
-                return new Position(0, 0);
-        }
-
-        public Position Normalize(Position pos)
-        {
-            return new Position(pos.X < 0 ? pos.X + Width : pos.X % Width, pos.Y);
+            position = Normalize(position);
+            _cells.Add(cell, position);
+            Map[position.X, position.Y] = true;
         }
     }
 }

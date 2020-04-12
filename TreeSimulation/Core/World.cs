@@ -8,13 +8,14 @@ namespace TreeSimulation.Core
     {
         private int[,] _lightField;
 
-        public World(int seed, int width, int height, int startPopulation, WorldSettings settings)
+        public World(int seed, int width, int height, int startPopulation, Landscape landscape, WorldSettings settings)
         {
             Settings = settings;
             GenerationSeed = seed;
             Random = new Random(seed);
             _lightField = new int[width, height];
-            Cells = new CellCollection(width, height);
+            Landscape = landscape;
+            Cells = new CellCollection(width, height, Landscape);
             Seeds = CreateStartSeeds(startPopulation);
             UpdateView();
         }
@@ -34,6 +35,10 @@ namespace TreeSimulation.Core
         {
             get;
         }
+        public Landscape Landscape 
+        {
+            get;
+        }
         public int GenerationSeed
         {
             get;
@@ -49,6 +54,7 @@ namespace TreeSimulation.Core
         {
             get;
         }
+
 
         public int Height
         {
@@ -94,8 +100,12 @@ namespace TreeSimulation.Core
         {
             var res = new List<Seed>();
             for (int i = 1; i < count + 1; i++)
-                res.Add(new Seed(new Position(Width / (count + 1) * i, 0), new Tree(this)));
+            {
+                int x = Width / (count + 1) * i;
+                int y = Height - 5;
 
+                res.Add(new Seed(new Position(x, y), new Tree(this)));
+            }
             return res;
         }
 
@@ -111,7 +121,7 @@ namespace TreeSimulation.Core
 
         private bool IsOnGround(Seed seed)
         {
-            return seed.Position.Y == 0;
+            return seed.Position.Y == Landscape[seed.Position.X];
         }
 
         private void UpdateLightField()
@@ -132,7 +142,7 @@ namespace TreeSimulation.Core
 
         private void UpdateView()
         {
-            View = Cells.Objects.Cast<IVisible>().Concat(Seeds.Cast<IVisible>()).Select(x => x.GetView()).ToList();
+            View = Cells.Objects.Select(x => x.GetView()).Concat(Seeds.Select(x => x.GetView())).ToList();
         }
     }
 }

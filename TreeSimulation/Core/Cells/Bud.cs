@@ -1,4 +1,5 @@
-﻿using Windows.UI;
+﻿using System;
+using Windows.UI;
 
 namespace TreeSimulation.Core.Cells
 {
@@ -17,9 +18,21 @@ namespace TreeSimulation.Core.Cells
         public override void EnergyStage()
         {
             base.EnergyStage();
-            var light = LightEnergy;
+            var light = LightEnergy * Settings.BudProfit;
             Energy += light;
-            CommonEnergy += light * Settings.BudProfit;
+            if (Energy >= Settings.BudMass)
+            {
+                CommonEnergy += Energy - Settings.BudMass;
+            }
+            else
+            {
+                var delta = Math.Min(Settings.MaxEnergyPass, Settings.BudMass - Energy);
+                CommonEnergy -= delta;
+                Energy += delta;
+            }
+
+
+
         }
 
         public override View GetView()

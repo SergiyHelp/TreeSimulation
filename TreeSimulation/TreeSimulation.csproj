@@ -123,6 +123,7 @@
     <Compile Include="Core\Cells\Cell.cs" />
     <Compile Include="Core\CellCollection.cs" />
     <Compile Include="Core\IVisible.cs" />
+    <Compile Include="Core\Landscape.cs" />
     <Compile Include="Core\View.cs" />
     <Compile Include="Core\Order.cs" />
     <Compile Include="Core\Cells\Fruit.cs" />

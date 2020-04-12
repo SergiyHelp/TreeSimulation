@@ -13,9 +13,11 @@ namespace TreeSimulation.Core
             _genes = new Gene[CommonSize];
 
             for (int i = 0; i < _genes.Length; i++)
-            {
                 _genes[i] = original._genes[i];
-            }
+
+            if (_random.NextDouble() < 0.25)
+                _genes[_random.Next(CommonSize)] = Gene.CreateRandom(_random);
+
         }
 
         public Genome(Random random)
@@ -23,10 +25,9 @@ namespace TreeSimulation.Core
             _random = random;
             _genes = new Gene[CommonSize];
 
-            for (int i = 0; i < _genes.Length; i++)
-            {
+            for (int i = 0; i < _genes.Length; i++)            
                 _genes[i] = Gene.CreateRandom(_random);
-            }
+            
         }
 
         public static int CommonSize => 16;

@@ -14,11 +14,13 @@
             MinLife = minLife;
             MaxLife = maxLife;
             BudProfit = budProfit;
+            MaxEnergyPass = 10d;
         }
 
         public double MaxEnergy { get; }
         public double MinEnergy { get; }
         public double CellsTransparentsy { get; }
+        public double MaxEnergyPass { get; }
         public double InitialEnergy { get; }
         public double EnergyCosts { get; }
         public double BudProfit { get; }

@@ -16,13 +16,13 @@
 
         <Canvas x:Name="_container">
             <controls:DropShadowPanel Canvas.Left="40" Canvas.Top="40" Canvas.ZIndex="2">
-                <Grid  Background="{ThemeResource SystemColorWindowBrush}" Width="250" Height="200">
+                <Grid  Background="{ThemeResource SystemColorWindowBrush}" Width="250">
                     <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="90" />
@@ -33,7 +33,7 @@
                     <TextBlock Grid.Row="2" x:Name="_dayNumber" Height="30" Text="0" Margin="10" />
                     <Button Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Content="Step" Click="MakeStep" />
                     <ToggleSwitch Grid.Row="4" x:Name="_play" IsOn="False" Margin="5" Toggled="ChangePlayMode" />
-                    <Slider x:Name="_speedSlider" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" Margin="5" Minimum="1" Maximum="30" Value="25" />
+                    <Slider x:Name="_speedSlider" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" Margin="5" Minimum="1" Maximum="1000" Value="100" />
                 </Grid>
             </controls:DropShadowPanel>
         </Canvas>

@@ -70,6 +70,14 @@ namespace TreeSimulation
             float cellSize = (float)Math.Min(sender.Size.Width / _world.Width, sender.Size.Height / _world.Height);
             float rectangleHeight = cellSize * _world.Height;
 
+            for (int i = 0; i < _world.Landscape.Width; i++)
+            {
+                float x = i * cellSize;
+                float y = rectangleHeight - _world.Landscape[i] * cellSize - cellSize;
+
+                args.DrawingSession.FillRectangle(x, y, cellSize, _world.Landscape[i] * cellSize, Colors.Gray);
+            }
+
             foreach (var item in _world.View)
             {
                 float x = item.X * cellSize;
@@ -77,7 +85,6 @@ namespace TreeSimulation
 
                 args.DrawingSession.FillRectangle(x, y, cellSize, cellSize, item.Color);
             }
-            args.DrawingSession.FillRectangle(0, rectangleHeight - cellSize, (float)sender.Size.Width, cellSize, Colors.Gray);
         }
 
         private void MakeStep(object sender, RoutedEventArgs e)

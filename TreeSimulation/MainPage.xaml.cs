@@ -28,6 +28,8 @@ namespace TreeSimulation
             _largestEnergyField.Value = (double)(_settings.Values["largestEnergy"] ?? _largestEnergyField.Value);
             _minLifetimeField.Value = (double)(_settings.Values["minLifetime"] ?? _minLifetimeField.Value);
             _maxLifetimeField.Value = (double)(_settings.Values["maxLifetime"] ?? _maxLifetimeField.Value);
+            _landscapeRange.RangeMax = (double)(_settings.Values["landMax"] ?? _landscapeRange.RangeMax);
+            _landscapeRange.RangeMin = (double)(_settings.Values["landMin"] ?? _landscapeRange.RangeMin);
         }
 
         private void CreateWorld(object sender, RoutedEventArgs e)
@@ -47,6 +49,8 @@ namespace TreeSimulation
             _settings.Values["largestEnergy"] = _largestEnergyField.Value;
             _settings.Values["minLifetime"] = _minLifetimeField.Value;
             _settings.Values["maxLifetime"] = _maxLifetimeField.Value;
+            _settings.Values["landMax"] = _landscapeRange.RangeMax;
+            _settings.Values["landMin"] = _landscapeRange.RangeMin;
 
             WorldSettings settings = new WorldSettings(_largestEnergyField.Value,
                                                        _leastEnergyField.Value,
@@ -59,7 +63,9 @@ namespace TreeSimulation
                                                   (int)_minLifetimeField.Value,
                                                   (int)_maxLifetimeField.Value);
 
-            World world = new World(seed, (int)_widthSlider.Value, (int)_heightSlider.Value, (int)_populationSlider.Value, settings);
+            Landscape landscape = new Landscape((int)_widthSlider.Value, seed, (int)_landscapeRange.RangeMin, (int)_landscapeRange.RangeMax);
+
+            World world = new World(seed, (int)_widthSlider.Value, (int)_heightSlider.Value, (int)_populationSlider.Value, landscape, settings);
             Frame.Navigate(typeof(SimulationPage), world);
         }
     }

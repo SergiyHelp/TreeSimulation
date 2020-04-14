@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using Windows.Storage;
 using Windows.UI.Xaml;
 
@@ -10,69 +11,38 @@ namespace TreeSimulation.Core.Settings
 {
     public abstract class Property : DependencyObject
     {
-        public Property(string name, Range range)
+        PropertyInfo _info;
+
+
+        public Property(object origin, PropertyInfo info)
         {
-            Name = name;
-            Range = range;
+            Origin = origin;
+            _info = info;
         }
 
-        public abstract object Value
+        public object Value
         {
-            get;
-            set;
+            get => _info.GetValue(Origin);
+            set => _info.SetValue(Origin, value);
         }
 
         public string Name 
-        { 
-            get; 
-            private set; 
+        {
+            get => _info.Name;
+        }
+        public Type Type
+        {
+            get => _info.PropertyType;
         }
         public Range Range
         {
-            get; 
-            private set;
+            get
+            {
+                var attr = _info.GetCustomAttribute<RangeAttribute>();
+                return attr == null ? Range.Default : new Range(attr.Lower, attr.Upper);
+            }
         }
-
-        public void SaveTo(ApplicationDataCompositeValue data)
-        {
-            data[Name] = Value;
-        }
-        public void LoadFrom(ApplicationDataCompositeValue data)
-        {
-            Value = data[Name];
-        }
+        public object Origin
+        { get; set; }
     }
-
-    public class DoubleProperty : Property
-    {
-        public static DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(double), typeof(Property), new PropertyMetadata(0d));
-
-        public DoubleProperty(string name, Range range) : base(name, range)
-        {
-        }
-
-        public override object Value
-        {
-            get => GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
-        }
-    }
-
-    public class RangeProperty : Property
-    {
-        public static DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(Range), typeof(Property), new PropertyMetadata(Range.Default));
-
-        public RangeProperty(string name, Range range) : base(name, range)
-        {
-        }
-
-        public override object Value
-        {
-            get => GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
-        }
-    }
-
 }

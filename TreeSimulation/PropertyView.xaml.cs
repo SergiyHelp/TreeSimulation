@@ -12,16 +12,36 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
+using TreeSimulation.Core.Settings;
+using TreeSimulation.Core;
 
 namespace TreeSimulation
 {
     public sealed partial class PropertyView : UserControl
-    {
-        public PropertyView()
+    {        
+        public PropertyView(Property property)
         {
             this.InitializeComponent();
+            _title.Text = property.Name;
+
+            if (property.Type == typeof(Double))
+            {
+                var slider = new Slider();
+
+
+
+                _tool.Children.Add(slider);
+            }
+            else if(property.Type == typeof(Range))
+            {
+
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
+
+
     }
 }

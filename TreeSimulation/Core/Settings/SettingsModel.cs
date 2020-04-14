@@ -30,21 +30,12 @@ namespace TreeSimulation.Core.Settings
                 else
                     throw new Exception("Unsupported property type");
             }).ToArray();
-
-
-            for (int i = 0; i < props.Length; i++)
-            {
-                
-            }
-
         }
 
         public Property[] Properties
         {
             get;
             private set;
-        }
-
-        
+        }        
     }
 }

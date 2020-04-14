@@ -113,7 +113,7 @@ namespace TreeSimulation.Core
         public double GetEnergy(Position pos)
         {
             double relativeHeight = pos.Y / (double)Height;
-            double energy = relativeHeight * (Settings.MaxEnergy - Settings.MinEnergy) + Settings.MinEnergy;
+            double energy = relativeHeight * Settings.Light.Length + Settings.Light.L;
 
             energy *= Math.Pow(Settings.CellsTransparency, _lightField[pos.X, pos.Y]);
 

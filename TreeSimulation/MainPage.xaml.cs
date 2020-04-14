@@ -16,19 +16,29 @@ namespace TreeSimulation
             InitializeComponent();
             _data = ApplicationData.Current.LocalSettings;
 
-            _settings = SettingsModel.Load(_data.Values["settings"].ToString());
+            _widthSlider.Value = (double)(_data.Values["width"] ?? _widthSlider.Value);
+            _heightSlider.Value = (double)(_data.Values["height"] ?? _heightSlider.Value);
+            _populationSlider.Value = (double)(_data.Values["population"] ?? _populationSlider.Value);
 
+            
         }
 
         private void CreateWorld(object sender, RoutedEventArgs e)
         {
-            _data.Values["settings"] = SettingsModel.Save(_settings);
+            _data.Values["width"] = _widthSlider.Value;
+            _data.Values["height"] = _heightSlider.Value;
+            _data.Values["population"] = _populationSlider.Value;
+
 
             int seed = Int32.TryParse(_seedField.Text, out int val) ? val : (int)DateTime.Now.Ticks;
+            int width = (int)_widthSlider.Value;
+            int height = (int)_heightSlider.Value;
+            int population = (int)_populationSlider.Value;
 
             Landscape landscape = new Landscape((int)_widthSlider.Value, seed, (int)_landscapeRange.RangeMin, (int)_landscapeRange.RangeMax);
 
-            World world = new World(seed, (int)_widthSlider.Value, (int)_heightSlider.Value, (int)_populationSlider.Value, landscape, _settings.GetData());
+            
+            World world = new World(seed, width, height, population, landscape, null);
             Frame.Navigate(typeof(SimulationPage), world);
         }
     }

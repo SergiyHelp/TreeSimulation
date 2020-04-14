@@ -10,7 +10,7 @@ namespace TreeSimulation.Core
             Genome = new Genome(rand);
             Environment = environment;
             WoodColor = Color.FromArgb(255, (byte)rand.Next(100), (byte)rand.Next(120, 255), (byte)rand.Next(100));
-            DeathDay = Environment.Day + rand.Next(80, 120);
+            DeathDay = Environment.Day + (int)rand.InRange(Environment.Settings.Lifetime);
             Energy = Environment.Settings.InitialEnergy;
         }
 

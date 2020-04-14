@@ -124,26 +124,36 @@
     <Compile Include="Core\CellCollection.cs" />
     <Compile Include="Core\IVisible.cs" />
     <Compile Include="Core\Landscape.cs" />
+    <Compile Include="Core\Settings\Property.cs" />
+    <Compile Include="Core\Settings\RangeAttribute.cs" />
     <Compile Include="Core\View.cs" />
     <Compile Include="Core\Order.cs" />
     <Compile Include="Core\Cells\Fruit.cs" />
     <Compile Include="Core\Gene.cs" />
     <Compile Include="Core\Genome.cs" />
     <Compile Include="Core\Cells\Leaf.cs" />
-    <Compile Include="Core\WorldSettings\SettingsModel.cs" />
+    <Compile Include="Core\Settings\SettingsModel.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Position.cs" />
+    <Compile Include="NamedField.xaml.cs">
+      <DependentUpon>NamedField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Seed.cs" />
+    <Compile Include="Core\Range.cs" />
+    <Compile Include="PropertyView.xaml.cs">
+      <DependentUpon>PropertyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SimulationPage.xaml.cs">
       <DependentUpon>SimulationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Tree.cs" />
     <Compile Include="Core\Cells\Wood.cs" />
     <Compile Include="Core\World.cs" />
-    <Compile Include="Core\WorldSettings\WorldSettings.cs" />
+    <Compile Include="Core\Settings\WorldSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -168,6 +178,14 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NamedField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PropertyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SimulationPage.xaml">
       <SubType>Designer</SubType>

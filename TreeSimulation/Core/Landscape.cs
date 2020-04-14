@@ -5,45 +5,53 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
 
+using static System.Math;
+
 namespace TreeSimulation.Core
 {
     public class Landscape
     {
-        private readonly int[] _heels;
+        private readonly int[] _points;
 
         public Landscape(int width, int seed, int lowerBound, int upperBound)
         {
             Width = width;
-            _heels = new int[width];
+            _points = new int[width];
             Random rn = new Random(seed);
 
-
-            var points = new List<double> { 0, 0 };
-
-            for (double factor = width; points.Count < width; factor *= 0.5)
-                for (int i = points.Count - 1; i > 0; i--)
-                    points.Insert(i,  (points[i] + points[i - 1]) / 2 + (rn.NextDouble() - 0.5) * factor);
+            double shift1 = rn.NextDouble() * 10;
+            double shift2 = rn.NextDouble() * 5;
+            double shift3 = rn.NextDouble() * 4;
             
-            int dH = upperBound - lowerBound;
+            double factor1 = rn.NextDouble() * 16;
+            double factor2 = rn.NextDouble() * 8;
+            double factor3 = rn.NextDouble() * 3;
+
+            double func(double x) => Sin(x * PI * 2 + shift1) * factor1 + Sin(x * PI * 5 + shift2) * factor2 + Sin(x * PI * 23 + shift3) * factor3;
+
+            double[] points = new double[width];
+
+            for (int i = 0; i < width; i++)
+                points[i] = func(i / (double)width);
 
             double min = points.Min();
             double max = points.Max();
-            double dP = max - min;
+            double range = max - min;
 
+            _points = points.Select(x => (int)((x - min) * range)).ToArray();
 
-            for (int i = 0; i < width; i++)            
-                _heels[i] = (int)(((points[i] - min) / dP * dH) + lowerBound);       
-        }    
+            _points = points.Select(x => 10).ToArray();
+        }
 
         public int Width { get; }
         public int this[int x]
         {
-            get => _heels[x];
+            get => _points[x];
         }
 
         public bool IsFreeAt(Position position)
         {
-            return _heels[position.X] <= position.Y;
+            return _points[position.X] <= position.Y;
         }
 
     }

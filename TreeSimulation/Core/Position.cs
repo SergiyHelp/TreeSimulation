@@ -11,6 +11,14 @@
         public int X { get; }
         public int Y { get; }
 
+        public Position Normalized(World world)
+        {
+            if (world.IsClosed)
+                return new Position(X < 0 ? X + world.Width : X % world.Width, Y);
+            else
+                return this;
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Position position &&

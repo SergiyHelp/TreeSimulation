@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TreeSimulation.Core.Cells;
 
@@ -7,14 +8,12 @@ namespace TreeSimulation.Core
     public class CellCollection
     {
         private readonly Dictionary<Cell, Position> _cells;
-        private readonly Landscape _landscape;
+        private readonly World _world;
 
-        public CellCollection(int width, int height, Landscape landscape) : base()
+        public CellCollection(World place) : base()
         {
-            Width = width;
-            Height = height;
-            _landscape = landscape;
-            Map = new bool[width, height];
+            _world = place;
+            Map = new bool[Width, Height];
             _cells = new Dictionary<Cell, Position>();
         }
 
@@ -24,7 +23,7 @@ namespace TreeSimulation.Core
         }
         public int Height
         {
-            get;
+            get => _world.Height;
         }
         public bool[,] Map 
         { 
@@ -47,11 +46,6 @@ namespace TreeSimulation.Core
             }
             return false;
         }
-        public bool IsInside(Position pos)
-        {
-            pos = Normalize(pos);
-            return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
-        }
         public Position GetPosition(Cell cell)
         {
             if (_cells.ContainsKey(cell))
@@ -59,10 +53,7 @@ namespace TreeSimulation.Core
             else
                 return new Position(0, 0);
         }
-        public Position Normalize(Position pos)
-        {
-            return new Position(pos.X < 0 ? pos.X + Width : pos.X % Width, pos.Y);
-        }
+       
         public bool Replace(Cell from, Cell to)
         {
             if (_cells.ContainsKey(from))
@@ -74,14 +65,14 @@ namespace TreeSimulation.Core
             }
             return false;
         }
-        public bool IsFreeAt(Position position)
+        public bool HasCellAt(Position position)
         {
-            position = Normalize(position);
-            return IsInside(position) && !Map[position.X, position.Y] && _landscape.IsFreeAt(position);
+            
+            return Map[position.X, position.Y];
         }
         public void Add(Cell cell, Position position)
         {
-            position = Normalize(position);
+            position = position.Normalized(_world);
             _cells.Add(cell, position);
             Map[position.X, position.Y] = true;
         }

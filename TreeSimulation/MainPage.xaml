@@ -11,11 +11,8 @@
     xmlns:settings ="using:TreeSimulation.Core.Settings"
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-    <Page.DataContext>
-        <settings:SettingsModel x:Name="_settings"/>
-    </Page.DataContext>
     <controls:DropShadowPanel Name="_shadow" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <ScrollViewer Width="360" Height="540" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Width="380" Height="610" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Auto">
             <Grid Background="{ThemeResource SystemColorWindowBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -25,6 +22,7 @@
 
                 <Grid Margin="20">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="70" />
                         <RowDefinition Height="70" />
                         <RowDefinition Height="70" />
                         <RowDefinition Height="70" />
@@ -45,37 +43,11 @@
                     <controls:RangeSelector x:Name="_landscapeRange" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="{Binding ElementName=_heightSlider, Path=Value}" RangeMax="100" StepFrequency="1" />
                     <TextBlock Text="Seed" Grid.Row="4" TextAlignment="Center" VerticalAlignment="Center" />
                     <TextBox x:Name="_seedField" Grid.Column="1" Grid.Row="4" Margin="0 10" VerticalAlignment="Center" />
+                    <TextBlock Text="Is World Closed" Grid.Row="5" TextAlignment="Center" VerticalAlignment="Center" />
+                    <CheckBox x:Name="_closedCheck" Grid.Column="1" Grid.Row="5" Margin="0 10" VerticalAlignment="Center" />
                 </Grid>
                 <controls:Expander Grid.Row="1" Header="Advanced Settings" Background="{ThemeResource SystemColorWindowBrush}">
-                    <StackPanel>
-                        <local:NamedField x:Name="_minEnergyField" Width="350" 
-                            Title="Min Energy" Value="{Binding ElementName=_settings, Path=MinEnergy}"
-                            MinValue="1" MaxValue="{Binding ElementName=_maxEnergyField, Path=Value}" />
-                        <local:NamedField x:Name="_maxEnergyField" Width="350" 
-                            Title="Max Energy" Value="{Binding ElementName=_settings, Path=MaxEnergy}"
-                            MinValue="{Binding ElementName=_minEnergyField, Path=Value}" MaxValue="1000" />
-                        <local:NamedField x:Name="_initialEnergyField" Width="350" 
-                            Title="Initial Energy" Value="{Binding ElementName=_settings, Path=InitialEnergy}"
-                            MinValue="1" MaxValue="100" />
-                        <local:NamedField x:Name="_minLifeField" Width="350" 
-                            Title="Min Life" Value="{Binding ElementName=_settings, Path=MinLife}"
-                            MinValue="1" MaxValue="100" />
-                        <local:NamedField x:Name="_maxLifeField" Width="350" 
-                            Title="Max Life" Value="{Binding ElementName=_settings, Path=MaxLife}"
-                            MinValue="1" MaxValue="100" />
-                        <local:NamedField x:Name="_energyCostsField" Width="350" 
-                            Title="Energy Costs" Value="{Binding ElementName=_settings, Path=EnergyCosts}"
-                            MinValue="1" MaxValue="100" />
-                        <local:NamedField x:Name="_budMassField" Width="350" 
-                            Title="Bud Mass" Value="{Binding ElementName=_settings, Path=BudMass}"
-                            MinValue="1" MaxValue="100" />
-                        <local:NamedField x:Name="_сellsTransparencyField" Width="350" 
-                            Title="Cells Transparency" Value="{Binding ElementName=_settings, Path=CellsTransparency}"
-                            MinValue="1" MaxValue="100" />
-                        <local:NamedField x:Name="_budProfitField" Width="350" 
-                            Title="Bud Profit" Value="{Binding ElementName=_settings, Path=BudProfit}"
-                            MinValue="1" MaxValue="100" />
-
+                    <StackPanel x:Name="_advancedToolList">
                     </StackPanel>
                 </controls:Expander>
                 <Button x:Name="_confirmButton" Grid.Row="2" Margin="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Create World" Click="CreateWorld" />

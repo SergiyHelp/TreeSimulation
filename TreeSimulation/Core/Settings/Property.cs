@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
-using Windows.Storage;
 using Windows.UI.Xaml;
 
 namespace TreeSimulation.Core.Settings
 {
-    public abstract class Property : DependencyObject
+    public class Property : DependencyObject
     {
-        PropertyInfo _info;
-
+        private readonly PropertyInfo _info;
 
         public Property(object origin, PropertyInfo info)
         {
@@ -20,21 +14,23 @@ namespace TreeSimulation.Core.Settings
             _info = info;
         }
 
-        public object Value
-        {
-            get => _info.GetValue(Origin);
-            set => _info.SetValue(Origin, value);
-        }
-
-        public string Name 
-        {
-            get => _info.Name;
-        }
-        public Type Type
+        public Type   Type  
         {
             get => _info.PropertyType;
         }
-        public Range Range
+        public double Step  
+        {
+            get => _info.GetCustomAttribute<RangeAttribute>()?.Step ?? 1;
+        }
+        public string Name  
+        {
+            get => _info.Name;
+        }
+        public bool Advanced
+        {
+            get => _info.GetCustomAttribute<AdvancedAttribute>() != null;
+        }
+        public Range  Range 
         {
             get
             {
@@ -42,7 +38,15 @@ namespace TreeSimulation.Core.Settings
                 return attr == null ? Range.Default : new Range(attr.Lower, attr.Upper);
             }
         }
+        public object Value 
+        {
+            get => _info.GetValue(Origin);
+            set => _info.SetValue(Origin, value);
+        }
         public object Origin
-        { get; set; }
+        { 
+            get; 
+            set; 
+        }
     }
 }

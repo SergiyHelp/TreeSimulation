@@ -132,7 +132,6 @@
     <Compile Include="Core\Gene.cs" />
     <Compile Include="Core\Genome.cs" />
     <Compile Include="Core\Cells\Leaf.cs" />
-    <Compile Include="Core\Settings\SettingsModel.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

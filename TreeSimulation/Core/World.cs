@@ -9,14 +9,17 @@ namespace TreeSimulation.Core
     {
         private int[,] _lightField;
 
-        public World(int seed, int width, int height, int startPopulation, Landscape landscape, WorldSettings settings)
+        public World(int seed, int width, int height, int startPopulation, bool isClosed, Landscape landscape, WorldSettings settings)
         {
             Settings = settings;
             GenerationSeed = seed;
+            IsClosed = isClosed;
+            Width = width;
+            Height = height;
             Random = new Random(seed);
             _lightField = new int[width, height];
             Landscape = landscape;
-            Cells = new CellCollection(width, height, Landscape);
+            Cells = new CellCollection(this);
             Seeds = CreateStartSeeds(startPopulation);
             UpdateView();
         }
@@ -25,6 +28,11 @@ namespace TreeSimulation.Core
         {
             get;
             private set;
+        }
+
+        public bool IsClosed
+        {
+            get;
         }
 
         public WorldSettings Settings
@@ -59,12 +67,12 @@ namespace TreeSimulation.Core
 
         public int Height
         {
-            get => Cells.Height;
+            get;
         }
 
         public int Width
         {
-            get => Cells.Width;
+            get;
         }
 
         public int Day
@@ -84,19 +92,29 @@ namespace TreeSimulation.Core
                 item.GenerationStage(order);
             order.Execute(this);
 
-            Seeds = Seeds.Where(c => Cells.IsFreeAt(c.Position)).ToList();
+            Seeds = Seeds.Where(c => IsFreeAt(c.Position)).ToList();
 
             var landedSeeds = Seeds.Where(x => IsOnGround(x)).ToList();
             landedSeeds.ForEach(x => Cells.Add(x.Plant(), x.Position));
             Seeds = Seeds.Except(landedSeeds).ToList();
             Seeds.ForEach(x => x.Fall());
 
-            Seeds = Seeds.Where(c => Cells.IsFreeAt(c.Position)).ToList();
+            Seeds = Seeds.Where(c => IsFreeAt(c.Position)).ToList();
 
             UpdateView();
             Day++;
         }
 
+        public bool IsFreeAt(Position position)
+        {
+            position = position.Normalized(this);
+            return IsPointInside(position) && !Cells.HasCellAt(position) && !Landscape.HasLandAt(position);
+        }
+        public bool IsPointInside(Position pos)
+        {
+            return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
+        }
+        
         private List<Seed> CreateStartSeeds(int count)
         {
             var res = new List<Seed>();

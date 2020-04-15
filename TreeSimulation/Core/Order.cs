@@ -16,7 +16,7 @@ namespace TreeSimulation.Core
         {
             OnCreate += (w) =>
             {
-                if (Genome.IsValidGene(dna) && w.Cells.IsFreeAt(position))
+                if (Genome.IsValidGene(dna) && w.IsFreeAt(position))
                     w.Cells.Add(Cells.Cell.Create(Gene.GetCellType(dna), owner, owner.Genome.UseActivator(dna)), position);
             };
         }

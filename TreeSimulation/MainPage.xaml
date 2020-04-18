@@ -16,41 +16,16 @@
             <Grid Background="{ThemeResource SystemColorWindowBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition />
                     <RowDefinition Height="100" />
                 </Grid.RowDefinitions>
-
-                <Grid Margin="20">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="70" />
-                        <RowDefinition Height="70" />
-                        <RowDefinition Height="70" />
-                        <RowDefinition Height="70" />
-                        <RowDefinition Height="70" />
-                        <RowDefinition Height="70" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Width" TextAlignment="Center" VerticalAlignment="Center" />
-                    <Slider x:Name="_widthSlider" Grid.Column="1" VerticalAlignment="Center" Minimum="50" Maximum="512" StepFrequency="5" Value="300" />
-                    <TextBlock Text="Height" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Center" />
-                    <Slider x:Name="_heightSlider" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Minimum="50" Maximum="400" StepFrequency="5" Value="140" />
-                    <TextBlock Text="Population" Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center" />
-                    <Slider x:Name="_populationSlider" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Minimum="1" Maximum="50" StepFrequency="1" />
-                    <TextBlock Text="Landscape" Grid.Row="3" TextAlignment="Center" VerticalAlignment="Center" />
-                    <controls:RangeSelector x:Name="_landscapeRange" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="{Binding ElementName=_heightSlider, Path=Value}" RangeMax="100" StepFrequency="1" />
-                    <TextBlock Text="Seed" Grid.Row="4" TextAlignment="Center" VerticalAlignment="Center" />
-                    <TextBox x:Name="_seedField" Grid.Column="1" Grid.Row="4" Margin="0 10" VerticalAlignment="Center" />
-                    <TextBlock Text="Is World Closed" Grid.Row="5" TextAlignment="Center" VerticalAlignment="Center" />
-                    <CheckBox x:Name="_closedCheck" Grid.Column="1" Grid.Row="5" Margin="0 10" VerticalAlignment="Center" />
-                </Grid>
-                <controls:Expander Grid.Row="1" Header="Advanced Settings" Background="{ThemeResource SystemColorWindowBrush}">
-                    <StackPanel x:Name="_advancedToolList">
-                    </StackPanel>
-                </controls:Expander>
-                <Button x:Name="_confirmButton" Grid.Row="2" Margin="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Create World" Click="CreateWorld" />
+                <StackPanel x:Name="_toolList">
+                    <controls:Expander Grid.Row="1" Header="Advanced Settings" Background="{ThemeResource SystemColorWindowBrush}">
+                        <StackPanel x:Name="_advancedToolList">
+                        </StackPanel>
+                    </controls:Expander>
+                </StackPanel>
+                
+                <Button x:Name="_confirmButton" Grid.Row="1" Margin="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Create World" Click="CreateWorld" />
             </Grid>
         </ScrollViewer>
     </controls:DropShadowPanel>

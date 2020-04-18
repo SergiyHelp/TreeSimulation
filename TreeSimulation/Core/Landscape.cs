@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TreeSimulation.Core.Settings;
 using Windows.UI;
 
 using static System.Math;
@@ -13,11 +14,11 @@ namespace TreeSimulation.Core
     {
         private readonly int[] _points;
 
-        public Landscape(int width, int seed, Range range)
+        public Landscape(WorldSettings settings, World world)
         {
-            Width = width;
-            _points = new int[width];
-            Random rn = new Random(seed);
+            Width = world.Width;
+            _points = new int[Width];
+            Random rn = new Random(world.GenerationSeed);
 
             double shift1 = rn.NextDouble() * 10;
             double shift2 = rn.NextDouble() * 5;
@@ -31,35 +32,45 @@ namespace TreeSimulation.Core
             double factor4 = rn.NextDouble() * 4;
             double factor5 = rn.NextDouble() * 1;
 
-            double func(double x) => 
-                Sin(x * PI * 2 *  2 + shift1) * factor1 + 
-                Sin(x * PI * 2 *  5 + shift2) * factor2 + 
+            double func(double x) =>
+                Sin(x * PI * 2 * 2 + shift1) * factor1 +
+                Sin(x * PI * 2 * 5 + shift2) * factor2 +
                 Sin(x * PI * 2 * 13 + shift3) * factor3 +
                 Sin(x * PI * 2 * 37 + shift4) * factor4 +
                 Sin(x * PI * 2 * 61 + shift5) * factor5;
 
-            double[] points = new double[width];
+            double[] points = new double[Width];
 
-            for (int i = 0; i < width; i++)
-                points[i] = func(i / (double)(width + 1));
+            for (int i = 0; i < Width; i++)
+                points[i] = func(i / (double)(Width + 1));
 
             double min = points.Min();
             double max = points.Max();
             double diff = max - min;
 
-            _points = points.Select(x => (int)((x - min) / diff * range.Length + range.L)).ToArray();
+            double realL = settings.Landscape.Length * settings.Height;
+            double realM = settings.Landscape.L * settings.Height;
 
+            _points = points.Select(x => (int)((x - min) / diff * realL + realM)).ToArray();
         }
 
-        public int Width { get; }
+        public int Width 
+        { 
+            get; 
+        }
         public int this[int x]
         {
             get => _points[x];
         }
 
+
+        public bool IsPointOnGround(Position position)
+        {
+            return position.Y == _points[position.X];
+        }
         public bool HasLandAt(Position position)
         {
-            return _points[position.X] <= position.Y;
+            return _points[position.X] > position.Y;
         }
 
     }

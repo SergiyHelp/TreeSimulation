@@ -10,16 +10,17 @@ namespace TreeSimulation.Core
         private readonly Dictionary<Cell, Position> _cells;
         private readonly World _world;
 
-        public CellCollection(World place) : base()
+        public CellCollection(World world) : base()
         {
-            _world = place;
+            _world = world;
+            
             Map = new bool[Width, Height];
             _cells = new Dictionary<Cell, Position>();
         }
 
         public int Width
         {
-            get;
+            get => _world.Width;
         }
         public int Height
         {

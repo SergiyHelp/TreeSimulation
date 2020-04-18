@@ -9,18 +9,21 @@ namespace TreeSimulation.Core
     {
         private int[,] _lightField;
 
-        public World(int seed, int width, int height, int startPopulation, bool isClosed, Landscape landscape, WorldSettings settings)
+        public World(WorldSettings settings)
         {
             Settings = settings;
-            GenerationSeed = seed;
-            IsClosed = isClosed;
-            Width = width;
-            Height = height;
-            Random = new Random(seed);
-            _lightField = new int[width, height];
-            Landscape = landscape;
+            
+            GenerationSeed = Int32.TryParse(Settings.Seed, out int res) ? res : (int)DateTime.Now.Ticks;
+            
+
+            IsClosed = settings.IsClosed;
+            Width = (int)settings.Width;
+            Height = (int)settings.Height;
+            Random = new Random(GenerationSeed);
+            _lightField = new int[Width, Height];
+            Landscape = new Landscape(settings, this);
             Cells = new CellCollection(this);
-            Seeds = CreateStartSeeds(startPopulation);
+            Seeds = CreateStartSeeds((int)settings.Population);
             UpdateView();
         }
 
@@ -94,7 +97,7 @@ namespace TreeSimulation.Core
 
             Seeds = Seeds.Where(c => IsFreeAt(c.Position)).ToList();
 
-            var landedSeeds = Seeds.Where(x => IsOnGround(x)).ToList();
+            var landedSeeds = Seeds.Where(x => Landscape.IsPointOnGround(x.Position)).ToList();
             landedSeeds.ForEach(x => Cells.Add(x.Plant(), x.Position));
             Seeds = Seeds.Except(landedSeeds).ToList();
             Seeds.ForEach(x => x.Fall());
@@ -136,11 +139,6 @@ namespace TreeSimulation.Core
             energy *= Math.Pow(Settings.CellsTransparency, _lightField[pos.X, pos.Y]);
 
             return energy;
-        }
-
-        private bool IsOnGround(Seed seed)
-        {
-            return seed.Position.Y == Landscape[seed.Position.X];
         }
 
         private void UpdateLightField()

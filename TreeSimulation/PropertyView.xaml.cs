@@ -58,11 +58,44 @@ namespace TreeSimulation
 
                 _tool.Children.Add(selector);
             }
+            else if(property.Type == typeof(Boolean))
+            {
+                var check = new CheckBox
+                {
+                    IsChecked = (bool)property.Value,
+                    VerticalAlignment = VerticalAlignment.Center,
+                };
+                check.Checked += (o, e) => property.Value = true;
+                check.Unchecked += (o, e) => property.Value = false;
+
+                _tool.Children.Add(check);
+            }
+            else if (property.Type == typeof(String))
+            {
+                var field = new TextBox
+                {
+                    Text = property.Value?.ToString() ?? "",
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Center,
+                };
+                field.TextChanged += (o, e) => property.Value = field.Text;
+
+                _tool.Children.Add(field);
+            }
             else
             {
                 throw new NotImplementedException();
             }
-        }
 
+            if(property.Advanced)
+            {
+                _titleCol.Width = new GridLength(150d);
+            }
+            else
+            {
+                _titleCol.Width = new GridLength(120d);
+            }
+
+        }
     }
 }

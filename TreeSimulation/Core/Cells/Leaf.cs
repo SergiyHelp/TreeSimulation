@@ -14,9 +14,6 @@ namespace TreeSimulation.Core.Cells
             CommonEnergy += LightEnergy;
         }
 
-        public override View GetView()
-        {
-            return new View(Position, Colors.Red);
-        }
+        public override View View => new View(Position, Colors.Red);
     }
 }

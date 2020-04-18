@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.UI;
+﻿using Windows.UI;
 
 namespace TreeSimulation.Core.Cells
 {
@@ -24,10 +23,10 @@ namespace TreeSimulation.Core.Cells
             base.EnergyStage();
             var light = LightEnergy * Settings.BudProfit;
             Energy += light;
-            if(_term == 0)
+            if (_term == 0)
             {
                 _term = ActiveGene[4] % Genome.CommonSize;
-                if(Energy < Settings.BudMass)
+                if (Energy < Settings.BudMass)
                 {
                     CommonEnergy += Energy;
                     Energy = 0;
@@ -41,16 +40,9 @@ namespace TreeSimulation.Core.Cells
             {
                 _term--;
             }
-
-
-
-
         }
 
-        public override View GetView()
-        {
-            return new View(Position, Colors.Blue);
-        }
+        public override View View => new View(Position, Colors.Blue);
 
         protected override void NormalLife(Order order)
         {

@@ -69,7 +69,7 @@ namespace TreeSimulation.Core.Cells
             order.AddRemoving(this);
         }
 
-        public abstract View GetView();
+        public abstract View View { get; }
 
         public override string ToString()
         {

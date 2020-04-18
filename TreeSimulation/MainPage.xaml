@@ -24,7 +24,7 @@
                         </StackPanel>
                     </controls:Expander>
                 </StackPanel>
-                
+
                 <Button x:Name="_confirmButton" Grid.Row="1" Margin="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Create World" Click="CreateWorld" />
             </Grid>
         </ScrollViewer>

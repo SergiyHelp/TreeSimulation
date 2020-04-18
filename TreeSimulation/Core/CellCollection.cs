@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TreeSimulation.Core.Cells;
 
@@ -13,7 +12,7 @@ namespace TreeSimulation.Core
         public CellCollection(World world) : base()
         {
             _world = world;
-            
+
             Map = new bool[Width, Height];
             _cells = new Dictionary<Cell, Position>();
         }
@@ -22,19 +21,26 @@ namespace TreeSimulation.Core
         {
             get => _world.Width;
         }
+
         public int Height
         {
             get => _world.Height;
         }
-        public bool[,] Map 
-        { 
+
+        public bool[,] Map
+        {
             get;
         }
+
         public List<Cell> Objects
         {
             get => _cells.Keys.ToList();
         }
 
+        public IEnumerable<View> Views
+        {
+            get => _cells.Select(x => x.Key.View);
+        }
 
         public bool Remove(Cell cell)
         {
@@ -47,6 +53,7 @@ namespace TreeSimulation.Core
             }
             return false;
         }
+
         public Position GetPosition(Cell cell)
         {
             if (_cells.ContainsKey(cell))
@@ -54,7 +61,7 @@ namespace TreeSimulation.Core
             else
                 return new Position(0, 0);
         }
-       
+
         public bool Replace(Cell from, Cell to)
         {
             if (_cells.ContainsKey(from))
@@ -66,11 +73,12 @@ namespace TreeSimulation.Core
             }
             return false;
         }
+
         public bool HasCellAt(Position position)
         {
-            
             return Map[position.X, position.Y];
         }
+
         public void Add(Cell cell, Position position)
         {
             position = position.Normalized(_world);

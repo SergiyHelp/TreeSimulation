@@ -14,23 +14,27 @@ namespace TreeSimulation.Core.Settings
             _info = info;
         }
 
-        public Type   Type  
+        public Type Type
         {
             get => _info.PropertyType;
         }
-        public double Step  
+
+        public double Step
         {
             get => _info.GetCustomAttribute<RangeAttribute>()?.Step ?? 1;
         }
-        public string Name  
+
+        public string Name
         {
             get => _info.Name;
         }
+
         public bool Advanced
         {
             get => _info.GetCustomAttribute<AdvancedAttribute>() != null;
         }
-        public Range  Range 
+
+        public Range Range
         {
             get
             {
@@ -38,15 +42,17 @@ namespace TreeSimulation.Core.Settings
                 return attr == null ? Range.Default : new Range(attr.Lower, attr.Upper);
             }
         }
-        public object Value 
+
+        public object Value
         {
             get => _info.GetValue(Origin);
             set => _info.SetValue(Origin, value);
         }
+
         public object Origin
-        { 
-            get; 
-            set; 
+        {
+            get;
+            set;
         }
     }
 }

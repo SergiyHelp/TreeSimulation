@@ -10,10 +10,10 @@
     d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="_titleCol"/>
-            <ColumnDefinition/>
+            <ColumnDefinition x:Name="_titleCol" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <TextBlock x:Name="_title" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center"/>
-        <Grid x:Name="_tool" Grid.Column="1" Margin="10 0"/>
+        <TextBlock x:Name="_title" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" />
+        <Grid x:Name="_tool" Grid.Column="1" Margin="10 0" />
     </Grid>
 </UserControl>

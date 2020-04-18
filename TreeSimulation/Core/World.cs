@@ -12,18 +12,17 @@ namespace TreeSimulation.Core
         public World(WorldSettings settings)
         {
             Settings = settings;
-            
+
             GenerationSeed = Int32.TryParse(Settings.Seed, out int res) ? res : (int)DateTime.Now.Ticks;
-            
 
             IsClosed = settings.IsClosed;
             Width = (int)settings.Width;
             Height = (int)settings.Height;
             Random = new Random(GenerationSeed);
             _lightField = new int[Width, Height];
-            Landscape = new Landscape(settings, this);
+            Landscape = new Landscape(this);
             Cells = new CellCollection(this);
-            Seeds = CreateStartSeeds((int)settings.Population);
+            Seeds = new SeedCollection(this);
             UpdateView();
         }
 
@@ -47,26 +46,26 @@ namespace TreeSimulation.Core
         {
             get;
         }
-        public Landscape Landscape 
+
+        public Landscape Landscape
         {
             get;
         }
+
         public int GenerationSeed
         {
             get;
         }
 
-        public List<Seed> Seeds
+        public SeedCollection Seeds
         {
             get;
-            set;
         }
 
         public Random Random
         {
             get;
         }
-
 
         public int Height
         {
@@ -95,14 +94,10 @@ namespace TreeSimulation.Core
                 item.GenerationStage(order);
             order.Execute(this);
 
-            Seeds = Seeds.Where(c => IsFreeAt(c.Position)).ToList();
-
-            var landedSeeds = Seeds.Where(x => Landscape.IsPointOnGround(x.Position)).ToList();
-            landedSeeds.ForEach(x => Cells.Add(x.Plant(), x.Position));
-            Seeds = Seeds.Except(landedSeeds).ToList();
-            Seeds.ForEach(x => x.Fall());
-
-            Seeds = Seeds.Where(c => IsFreeAt(c.Position)).ToList();
+            Seeds.Filter();
+            Seeds.PlantLanded();
+            Seeds.Fall();
+            Seeds.Filter();
 
             UpdateView();
             Day++;
@@ -113,22 +108,10 @@ namespace TreeSimulation.Core
             position = position.Normalized(this);
             return IsPointInside(position) && !Cells.HasCellAt(position) && !Landscape.HasLandAt(position);
         }
+
         public bool IsPointInside(Position pos)
         {
             return pos.X >= 0 && pos.X < Width && pos.Y >= 0 && pos.Y < Height;
-        }
-        
-        private List<Seed> CreateStartSeeds(int count)
-        {
-            var res = new List<Seed>();
-            for (int i = 1; i < count + 1; i++)
-            {
-                int x = Width / (count + 1) * i;
-                int y = Height - 5;
-
-                res.Add(new Seed(new Position(x, y), new Tree(this)));
-            }
-            return res;
         }
 
         public double GetEnergy(Position pos)
@@ -159,7 +142,7 @@ namespace TreeSimulation.Core
 
         private void UpdateView()
         {
-            View = Cells.Objects.Select(x => x.GetView()).Concat(Seeds.Select(x => x.GetView())).ToList();
+            View = Cells.Views.Concat(Seeds.Views).ToList();
         }
     }
 }

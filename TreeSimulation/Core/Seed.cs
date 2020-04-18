@@ -14,16 +14,20 @@ namespace TreeSimulation.Core
             _parent = parent;
         }
 
-        public Position Position { get; set; }
+        public Position Position
+        {
+            get;
+            private set;
+        }
+
+        public View View
+        {
+            get => new View(Position, Colors.Black);
+        }
 
         public void Fall()
         {
             Position = new Position(Position.X, Position.Y - 1);
-        }
-
-        public View GetView()
-        {
-            return new View(Position, Colors.Black);
         }
 
         public Bud Plant()

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TreeSimulation.Core.Settings;
-using Windows.UI;
 
 using static System.Math;
 
@@ -14,7 +9,7 @@ namespace TreeSimulation.Core
     {
         private readonly int[] _points;
 
-        public Landscape(WorldSettings settings, World world)
+        public Landscape(World world)
         {
             Width = world.Width;
             _points = new int[Width];
@@ -48,30 +43,30 @@ namespace TreeSimulation.Core
             double max = points.Max();
             double diff = max - min;
 
-            double realL = settings.Landscape.Length * settings.Height;
-            double realM = settings.Landscape.L * settings.Height;
+            double realL = world.Settings.Landscape.Length * world.Settings.Height;
+            double realM = world.Settings.Landscape.L * world.Settings.Height;
 
             _points = points.Select(x => (int)((x - min) / diff * realL + realM)).ToArray();
         }
 
-        public int Width 
-        { 
-            get; 
+        public int Width
+        {
+            get;
         }
+
         public int this[int x]
         {
             get => _points[x];
         }
 
-
         public bool IsPointOnGround(Position position)
         {
             return position.Y == _points[position.X];
         }
+
         public bool HasLandAt(Position position)
         {
             return _points[position.X] > position.Y;
         }
-
     }
 }

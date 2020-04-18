@@ -2,6 +2,6 @@
 {
     public interface IVisible
     {
-        View GetView();
+        View View { get; }
     }
 }

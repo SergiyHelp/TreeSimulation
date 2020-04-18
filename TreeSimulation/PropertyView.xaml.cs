@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
+using TreeSimulation.Core;
+using TreeSimulation.Core.Settings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using TreeSimulation.Core.Settings;
-using TreeSimulation.Core;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace TreeSimulation
 {
     public sealed partial class PropertyView : UserControl
-    {        
+    {
         public PropertyView(Property property)
         {
             this.InitializeComponent();
@@ -41,7 +30,7 @@ namespace TreeSimulation
 
                 _tool.Children.Add(slider);
             }
-            else if(property.Type == typeof(Range))
+            else if (property.Type == typeof(Range))
             {
                 var selector = new RangeSelector
                 {
@@ -58,7 +47,7 @@ namespace TreeSimulation
 
                 _tool.Children.Add(selector);
             }
-            else if(property.Type == typeof(Boolean))
+            else if (property.Type == typeof(Boolean))
             {
                 var check = new CheckBox
                 {
@@ -87,7 +76,7 @@ namespace TreeSimulation
                 throw new NotImplementedException();
             }
 
-            if(property.Advanced)
+            if (property.Advanced)
             {
                 _titleCol.Width = new GridLength(150d);
             }
@@ -95,7 +84,6 @@ namespace TreeSimulation
             {
                 _titleCol.Width = new GridLength(120d);
             }
-
         }
     }
 }

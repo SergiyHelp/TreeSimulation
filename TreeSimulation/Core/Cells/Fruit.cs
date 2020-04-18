@@ -8,10 +8,7 @@ namespace TreeSimulation.Core.Cells
         {
         }
 
-        public override View GetView()
-        {
-            return new View(Position, Colors.Violet);
-        }
+        public override View View => new View(Position, Colors.Violet);
 
         protected override void Death(Order order)
         {

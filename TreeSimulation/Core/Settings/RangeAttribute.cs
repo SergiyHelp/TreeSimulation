@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TreeSimulation.Core.Settings
 {
@@ -15,13 +11,13 @@ namespace TreeSimulation.Core.Settings
             Step = 1;
             Upper = upper;
         }
+
         public RangeAttribute(double lower, double step, double upper)
         {
             Lower = lower;
             Step = step;
             Upper = upper;
         }
-
 
         public double Lower { get; }
         public double Step { get; }

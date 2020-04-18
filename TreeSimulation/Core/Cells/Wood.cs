@@ -6,9 +6,6 @@
         {
         }
 
-        public override View GetView()
-        {
-            return new View(Position, Owner.WoodColor);
-        }
+        public override View View => new View(Position, Owner.WoodColor);
     }
 }

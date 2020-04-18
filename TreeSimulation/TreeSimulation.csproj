@@ -124,6 +124,7 @@
     <Compile Include="Core\CellCollection.cs" />
     <Compile Include="Core\IVisible.cs" />
     <Compile Include="Core\Landscape.cs" />
+    <Compile Include="Core\SeedCollection.cs" />
     <Compile Include="Core\Settings\AdvancedAttribute.cs" />
     <Compile Include="Core\Settings\PositionAttribute.cs" />
     <Compile Include="Core\Settings\Property.cs" />

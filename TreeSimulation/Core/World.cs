@@ -118,7 +118,8 @@ namespace TreeSimulation.Core
         {
             double relativeHeight = pos.Y / (double)Height;
             double energy = relativeHeight * Settings.Light.Length + Settings.Light.L;
-
+            energy += Math.Cos(Day / Settings.YearCycle) * Settings.Amplitude;
+            energy = energy > Settings.Light.L ? energy : Settings.Light.L;
             energy *= Math.Pow(Settings.CellsTransparency, _lightField[pos.X, pos.Y]);
 
             return energy;

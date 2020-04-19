@@ -2,7 +2,10 @@
 using System.Linq;
 using TreeSimulation.Core;
 using TreeSimulation.Core.Settings;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -16,6 +19,14 @@ namespace TreeSimulation
         public MainPage()
         {
             InitializeComponent();
+            ApplicationViewTitleBar titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+            ApplicationView.GetForCurrentView().Title = "Color Picker";
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+
+
             _data = ApplicationData.Current.LocalSettings;
 
             string settingsSerialized = _data.Values["settings"].ToString();

@@ -5,6 +5,7 @@ using TreeSimulation.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -26,7 +27,7 @@ namespace TreeSimulation
             while (_active)
             {
                 _world.MakeStep();
-                _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => _dayNumber.Text = _world.Day.ToString());
+                _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => _dayNumber.Content = _world.Day.ToString());
                 System.Threading.Thread.Sleep(_period);
             }
         }
@@ -46,7 +47,7 @@ namespace TreeSimulation
 
         private void ChangePlayMode(object sender, RoutedEventArgs e)
         {
-            if (_play.IsOn)
+            if (_active == false)
             {
                 _speedSlider.IsEnabled = false;
                 _period = (int)(1000 / _speedSlider.Value);
@@ -90,7 +91,7 @@ namespace TreeSimulation
         private void MakeStep(object sender, RoutedEventArgs e)
         {
             _world.MakeStep();
-            _dayNumber.Text = _world.Day.ToString();
+            _dayNumber.Content = _world.Day.ToString();
         }
 
         private void CopySeed(object sender, RoutedEventArgs e)

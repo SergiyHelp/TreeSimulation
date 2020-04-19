@@ -11,6 +11,9 @@ namespace TreeSimulation.Core.Settings
         [JsonIgnore] public string Seed { get; set; }
         [Advanced] public bool IsClosed { get; set; }
         [Advanced] [Range(0, 5, 1000)] public Range Light { get; set; }
+        [Advanced] [Range(0, 1, 200)] public double Amplitude { get; set; }
+        [Advanced] [Range(100, 100, 10000)] public double YearCycle { get; set; }
+
         [Advanced] [Range(0, 0.05, 1)] public double CellsTransparency { get; set; }
         [Advanced] [Range(1, 10, 500)] public double InitialEnergy { get; set; }
         [Advanced] [Range(0, 0.2, 50)] public double EnergyCosts { get; set; }

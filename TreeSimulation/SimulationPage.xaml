@@ -10,32 +10,59 @@
     mc:Ignorable="d"
     Background="{ThemeResource SystemControlAcrylicWindowBrush}">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="57"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Margin="10" Text="Tree Simulation" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" Spacing="3" Grid.Row="1">
+            <AppBarButton
+                Width="100"
+                Content="New World" 
+                BorderThickness="2" 
+                VerticalAlignment="Stretch"
+                Style="{ThemeResource AppBarButtonRevealStyle}"
+                Click="CreateNewWorld" />
+            <AppBarButton x:Name="_seedLabel"  
+                Width="100"
+                ToolTipService.ToolTip="Copy to clipboard" 
+                Content="%seed%" 
+                Click="CopySeed" 
+                VerticalAlignment="Stretch"
+                BorderThickness="2" 
+                Style="{ThemeResource AppBarButtonRevealStyle}"/>
+            <AppBarButton x:Name="_dayNumber" 
+                          Width="100"
+                          VerticalAlignment="Stretch"                
+                          BorderThickness="2"
+                          Style="{ThemeResource AppBarButtonRevealStyle}"/>
+            <AppBarButton 
+                Content="Step" 
+                BorderThickness="2" 
+                VerticalAlignment="Stretch"                
+                Style="{ThemeResource AppBarButtonRevealStyle}"
+                Click="MakeStep" />
+            <ToggleSwitch x:Name="_play"
+                          Width="100"
+                          VerticalAlignment="Center"
+                          Toggled="ChangePlayMode"/>
+            <Slider x:Name="_speedSlider" 
+                    Margin="5" 
+                    VerticalAlignment="Center"
+                    Minimum="1" 
+                    Maximum="1000" 
+                    Width="200"
+                    Value="100" />
+                    
+        </StackPanel>
+
+
+
         <canvas:CanvasAnimatedControl x:Name="_canvas"
+                                      Grid.Row="2"
+                                      Grid.ColumnSpan="5"
                                       Draw="DrawCanvas"
                                       ClearColor="Transparent" />
-
-        <Canvas x:Name="_container">
-            <controls:DropShadowPanel Canvas.Left="40" Canvas.Top="40" Canvas.ZIndex="2">
-                <Grid  Background="{ThemeResource SystemColorWindowBrush}" Width="250">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="40" />
-                        <RowDefinition Height="40" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="90" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="_seedLabel" Content="%seed%" HorizontalAlignment="Stretch" Background="Transparent" Grid.ColumnSpan="2" ToolTipService.ToolTip="Copy to clipboard" VerticalAlignment="Center" Margin="5" Click="CopySeed" BorderThickness="0" BorderBrush="Transparent" />
-                    <Button Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" Content="New World" Click="CreateNewWorld" />
-                    <TextBlock Grid.Row="2" x:Name="_dayNumber" Height="30" Text="0" Margin="10" />
-                    <Button Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5" Content="Step" Click="MakeStep" />
-                    <ToggleSwitch Grid.Row="4" x:Name="_play" IsOn="False" Margin="5" Toggled="ChangePlayMode" />
-                    <Slider x:Name="_speedSlider" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" Margin="5" Minimum="1" Maximum="1000" Value="100" />
-                </Grid>
-            </controls:DropShadowPanel>
-        </Canvas>
     </Grid>
 </Page>
